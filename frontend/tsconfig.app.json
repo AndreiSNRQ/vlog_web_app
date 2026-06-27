@@ -24,7 +24,6 @@
       "@/layout/*": ["./src/Layout/*"],
       "@/auth/*": ["./src/pages/auth/*"],
       "@/utils/*": ["./src/lib/utils/*"],
-      "@/contex"
     },
 
     /* Linting */
