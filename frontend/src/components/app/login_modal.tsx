@@ -1,14 +1,13 @@
 import { useState } from "react"
 import axios from "axios"
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import {
   Field,
   FieldGroup,
@@ -82,16 +81,16 @@ function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
   }
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={onClose}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
           <div>
-            <AlertDialogTitle>{isRegister ? "Register" : "Login"}</AlertDialogTitle>
-            <AlertDialogDescription>
+            <DialogTitle>{isRegister ? "Register" : "Login"}</DialogTitle>
+            <DialogDescription>
               {isRegister ? "Create a new account to continue." : "Login to your account to continue."}
-            </AlertDialogDescription>
+            </DialogDescription>
           </div>
-        </AlertDialogHeader>
+        </DialogHeader>
         <FieldSet>
           <FieldGroup>
             {isRegister && (
@@ -122,18 +121,18 @@ function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
             {error ? <p className="text-sm text-red-500">{error}</p> : null}
           </FieldGroup>
         </FieldSet>
-        <AlertDialogFooter className="">
+        <DialogFooter className="">
           <div className="flex w-full justify-between">
             <Button variant="outline" onClick={() => setIsRegister((value) => !value)}>
               {isRegister ? "Back to login" : "Register"}
             </Button>
-            <AlertDialogAction onClick={handleSubmit} disabled={isSubmitting}>
+            <Button onClick={handleSubmit} disabled={isSubmitting}>
               {isSubmitting ? "Working..." : isRegister ? "Create account" : "Login"}
-            </AlertDialogAction>
+            </Button>
           </div>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 
