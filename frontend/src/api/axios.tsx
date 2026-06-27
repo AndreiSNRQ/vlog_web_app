@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Define your backend API URL. You can set this in your .env file (e.g., VITE_API_URL=http://localhost:8000/api)
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
 const api = axios.create({
@@ -10,18 +9,43 @@ const api = axios.create({
   },
 });
 
-// Function to handle user login
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken');
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
 export const login = async (credentials: { email: string; password: string }) => {
-  try {
-    const response = await api.post('/login', credentials);
-    // Assuming the backend returns a token upon successful login
-    const { token } = response.data;
-    // Store the token (e.g., in localStorage or a more secure state management)
+  const response = await api.post('/login', credentials);
+  const { token } = response.data;
+
+  if (token) {
     localStorage.setItem('authToken', token);
-    return response.data;
-  } catch (error) {
-    console.error('Login failed:', error);
-    throw error;
+  }
+
+  return response.data;
+};
+
+export const register = async (payload: { name: string; email: string; password: string }) => {
+  const response = await api.post('/register', payload);
+  const { token } = response.data;
+
+  if (token) {
+    localStorage.setItem('authToken', token);
+  }
+
+  return response.data;
+};
+
+export const logout = async () => {
+  try {
+    await api.post('/logout');
+  } finally {
+    localStorage.removeItem('authToken');
   }
 };
 

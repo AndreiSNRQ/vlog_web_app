@@ -7,9 +7,6 @@ export function Post() {
     input: "Create Post",
   }
 
-  const comments = {
-    content: "sDDSAS",
-  }
   const user = {
     name: "username",
     date: "01-20-2025",

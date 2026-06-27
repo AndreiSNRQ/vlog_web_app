@@ -21,6 +21,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { ChevronsUpDown, BadgeCheck, Bell, LogOut } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { logout } from "@/api/axios"
+import { toast } from "react-hot-toast"
 
 function NavUser({
   user,
@@ -31,7 +34,21 @@ function NavUser({
     avatar: string
   }
 }) {
+  const navigate = useNavigate()
   const { isMobile } = useSidebar()
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+    } catch {
+      // continue even if the request fails and clear local auth state
+    } finally {
+      localStorage.removeItem("authToken")
+      localStorage.removeItem("vlog-auth")
+      toast.success("You have been logged out.")
+      navigate("/", { replace: true })
+    }
+  }
 
   return (
     <SidebarMenu>
@@ -71,7 +88,7 @@ function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>
                 <LogOut />
                 Log out
               </DropdownMenuItem>
