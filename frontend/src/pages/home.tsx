@@ -94,21 +94,22 @@ function Home() {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-4 pb-2 flex flex-col">
-            <p className="text-sm text-slate-700">{post.content}</p>
-            {post.image && (
-              <img src={post.image} alt="Post visual" className="mt-3 h-100 max-h-150 rounded-xl w-fit" />
-            )}
-            {post.videoUrl && !post.image && (
-              <div className="mt-3 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+           <div className="flex flex-col gap-3">
+            <h1>{post.content}</h1>
+            {post.image && <img src={post.image} alt="user_post" className="max-h-[80vh] w-[40vw]" />}
+            {post.videoUrl && (
+              <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
                 <iframe
-                  src={post.videoUrl.replace("watch?v=", "embed/")}
-                  title="Embedded video"
-                  className="max-h-150 h-100 w-200"
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={post.videoUrl}
+                  title="YouTube video player"
+                  frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                />
+                ></iframe>
               </div>
             )}
+          </div>
           </CardContent>
           <CardFooter className="flex items-center justify-between gap-3 border-t px-4 py-3">
             <Button variant="ghost" onClick={() => handleLike(post.id)} className="flex-1 justify-center">
